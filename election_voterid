@@ -1,0 +1,15 @@
+# Define function to remove illegal votes and return valid data set
+def remove_illegal_votes(df):
+    # Code here
+    deduped_df = df.groupby('voter_id').sum()
+    deduped_df = deduped_df[~((deduped_df['candidate_A'] == 1) & (deduped_df['candidate_B'] == 1))]
+    
+    return deduped_df.reset_index()
+
+# Input and output processing (do not edit)
+from ast import literal_eval
+import pandas as pd
+filename = 'https://d3ejq4mxgimsmf.cloudfront.net/votes-5d1c9ce4560d4bcbace2742f26ca9c24.csv'
+df = pd.read_csv(filename)
+x, y = literal_eval(input())
+print(int(remove_illegal_votes(df).iloc[x, y]))
